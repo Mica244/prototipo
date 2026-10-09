@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Espacios CS · Equipamiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+:root{--az:#1D3343;--ac:#035C80;--ach:#024A67;--bl:#FCFCFC;--am:#FFCD02;--fo:#EDF1F4;--bo:#D5DDE3;--t2:#4E6272;--ib:#E3EFF5;--ok:#1B6E45;--okb:#E2F2E9;--av:#5C4A00;--avb:#FFF4C2;--er:#B3261E;--erb:#FCE8E6;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body.menu{overflow:hidden}body{font:15px/1.45 Archivo,Arial,sans-serif;color:var(--az);background:var(--fo);display:flex}
+.ms{font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;vertical-align:middle;font-feature-settings:'liga'}
+aside{width:232px;background:var(--az);color:#fff;padding:20px 12px;flex:none}
+aside h2{font-size:18px;margin:0 8px 20px;font-weight:800;letter-spacing:.02em}
+.sec{font-size:11px;font-weight:700;color:#9FB2C0;letter-spacing:.1em;margin:16px 8px 6px}
+.nav{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:8px;font-size:14px;color:#dbe5ec;margin-bottom:2px}
+.nav:hover{background:#2A4456}.nav.on{background:var(--ac);font-weight:700;color:#fff}.nav.on .ms{color:var(--am)}
+main{flex:1;min-width:0;overflow:auto;padding:24px 32px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--bl);border:1px solid var(--bo);border-radius:8px;padding:16px 20px;margin-bottom:16px}
+h1{font-size:24px;margin:0}h3{font-size:18px;margin:0 0 8px}.sm{font-size:13px;color:var(--t2)}
+.btn{font:600 14px Archivo,Arial;border-radius:8px;padding:9px 16px;border:2px solid transparent;cursor:pointer;display:inline-flex;gap:6px;align-items:center;background:none;color:var(--az)}
+.btn:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.cta{background:var(--am)}.cta:hover{background:#F2C200}.pri{background:var(--ac);color:#fff}.pri:hover{background:var(--ach)}
+.sec2{border-color:var(--ac);color:var(--ac)}.des{border-color:var(--er);color:var(--er)}.gh{color:var(--ac)}
+.btn:disabled{opacity:.45;cursor:not-allowed}.s{padding:6px 12px;font-size:13px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+input,select,textarea{font:inherit;padding:9px 12px;border:1.5px solid var(--bo);border-radius:8px;background:#fff;color:var(--az);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ib)}
+.bar input{width:240px}.bar select{width:auto}
+.chip{border:1.5px solid var(--bo);background:#fff;border-radius:8px;padding:6px 12px;font:600 13px Archivo;cursor:pointer;color:var(--t2)}
+.chip.on{background:var(--az);color:#fff;border-color:var(--az)}
+.card{background:var(--bl);border:1px solid var(--bo);border-radius:8px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;letter-spacing:.1em;color:var(--t2);padding:10px 14px;border-bottom:1px solid var(--bo);font-weight:700;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--bo);white-space:nowrap}
+tr.r{cursor:pointer}tr.r:hover td{background:var(--ib)}tr.sel td{background:var(--ib)}
+.b{display:inline-block;border-radius:4px;padding:2px 8px;font-size:12px;font-weight:700}
+.g{background:var(--okb);color:var(--ok)}.y{background:var(--avb);color:var(--av)}.rd{background:var(--erb);color:var(--er)}.bu{background:var(--ib);color:var(--ac)}.dk{background:var(--az);color:#fff}.gr{background:var(--bo);color:var(--t2)}
+.wrap{display:flex;gap:16px;align-items:flex-start}.wrap>.card:first-child{flex:1;min-width:0}
+.det{width:360px;flex:none;padding:18px;position:sticky;top:0}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bo);margin:12px 0}
+.tab{padding:8px 12px;font:600 14px Archivo;border:0;background:none;cursor:pointer;color:var(--t2);border-bottom:3px solid transparent}
+.tab.on{color:var(--ac);border-color:var(--ac)}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 8px;font-size:14px}.kv dt{color:var(--t2)}.kv dd{margin:0;font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.al{border-radius:8px;padding:10px 12px;font-size:13px;margin:10px 0;display:flex;gap:8px;align-items:flex-start}
+.al.i{background:var(--ib);color:var(--ac)}.al.e{background:var(--erb);color:var(--er)}.al.w{background:var(--avb);color:var(--av)}
+.li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bo);font-size:13px}
+.li .ms{background:var(--ib);color:var(--ac);border-radius:4px 4px 14px 14px;padding:4px;flex:none;font-size:18px}
+.ov{position:fixed;inset:0;background:rgba(29,51,67,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:8}
+.mod{background:var(--bl);border-radius:16px 16px 8px 8px;width:480px;max-width:100%;max-height:92%;overflow:auto;padding:22px}
+.mod label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--az);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;display:none;z-index:9}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--bl);border:1px solid var(--bo);border-radius:6px 6px 16px 16px;padding:12px 16px}.kpi b{font-size:30px;display:block}
+.top,.xbtn{display:none}
+@media(max-width:1000px){.top{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:3;background:var(--az);color:#fff;padding:10px 16px;margin:-16px -16px 16px;font-weight:800}
+.top button{background:none;border:0;color:#fff;cursor:pointer;padding:0}
+aside{display:block;position:fixed;inset:0 auto 0 0;z-index:7;transform:translateX(-100%);transition:transform .2s;overflow:auto}
+body.menu aside{transform:none}body.menu::after{content:'';position:fixed;inset:0;background:rgba(29,51,67,.5);z-index:6;left:232px}
+main{padding:16px;width:100%}.wrap{flex-direction:column}.kpis{grid-template-columns:1fr 1fr}
+.det{position:fixed;inset:0;z-index:4;width:100%;border-radius:0;overflow:auto;display:none;margin:0}
+body.sheet .det{display:block}.xbtn{display:inline-flex;float:right;background:var(--fo);border:0;border-radius:8px;padding:6px;cursor:pointer;color:var(--az)}}
+@media(max-width:700px){.bar input,.bar select{width:100%}#chips{display:flex;gap:6px;overflow-x:auto;width:100%;padding-bottom:4px}.chip{white-space:nowrap}
+header{padding:12px 14px}h1{font-size:20px}header .btn{width:100%;justify-content:center}
+.card:not(.det){background:none;border:0;overflow:visible}table,tbody{display:block}thead{display:none}
+tr.r{display:block;background:var(--bl);border:1px solid var(--bo);border-radius:8px;margin-bottom:10px;padding:6px 12px}
+td{display:flex;justify-content:space-between;gap:12px;border:0;padding:5px 0;white-space:normal;text-align:right}
+td::before{content:attr(data-l);color:var(--t2);font-size:12px;font-weight:700;letter-spacing:.06em;text-align:left;flex:none}
+tr.r:hover td,tr.sel td{background:none}tr.sel{border-color:var(--ac)}
+.row2{grid-template-columns:1fr}.kv{grid-template-columns:110px 1fr}.mod{padding:18px}.foot .btn{flex:1;justify-content:center}.ov{align-items:flex-end;padding:8px}.kpi b{font-size:24px}}
+</style></head><body>
+<aside><h2>ESPACIOS CS</h2><div class="sec">OPERACIÓN</div>
+<div class="nav"><span class="ms">space_dashboard</span>Inicio</div><div class="nav"><span class="ms">inbox</span>Pedidos</div><div class="nav"><span class="ms">calendar_month</span>Calendario</div>
+<div class="sec">CONFIGURACIÓN</div><div class="nav"><span class="ms">meeting_room</span>Espacios</div><div class="nav on"><span class="ms">devices_other</span>Equipamiento</div></aside>
+<main><div class="top"><button aria-label="Menú" onclick="document.body.classList.toggle('menu')"><span class="ms">menu</span></button>ESPACIOS CS</div><header><div><h1>Equipamiento</h1><div class="sm" id="sub"></div></div><button class="btn cta" onclick="openForm()"><span class="ms">add</span>Nuevo equipo</button></header>
+<div class="kpis" id="kpis"></div>
+<div class="bar"><input id="q" placeholder="Buscar por nombre o código" oninput="F.q=this.value;draw()"><div id="chips"></div>
+<select onchange="F.est=this.value;draw()"><option value="">Todos los estados</option><option>Disponible</option><option>En uso</option><option>Mantenimiento</option><option>Fuera de servicio</option></select>
+<select onchange="F.tipo=this.value;draw()"><option value="">Fijo y trasladable</option><option>Fijo</option><option>Trasladable</option></select></div>
+<div class="wrap"><div class="card"><table><thead><tr><th>EQUIPO</th><th>CATEGORÍA</th><th>TIPO</th><th>ESPACIO HABITUAL</th><th>UBICACIÓN ACTUAL</th><th>ESTADO</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="card det" id="det"></div></div></main>
+<div id="toast"></div><div id="mo"></div>
+<script>
+const CATS=['Robótica','Realidad virtual','Audiovisual','Cómputo','Mobiliario'],ESP=['Aula de Robótica','Aula 2','SUM','Mesa técnica','Sala de reuniones'];
+let n=100;const ev=(t,d,i)=>({t,d,i,f:'30/9 09:40'});
+let items=[
+{id:1,cod:'ROB-01',nom:'Kit de robótica',cat:'Robótica',tipo:'Fijo',hab:'Aula de Robótica',act:'Aula de Robótica',est:'Disponible',nota:'6 placas + sensores',res:[],hist:[ev('Alta','Equipo registrado','add_circle')]},
+{id:2,cod:'RV-03',nom:'Visores RV',cat:'Realidad virtual',tipo:'Trasladable',hab:'Aula 2',act:'SUM',est:'En uso',nota:'6 visores con controles',res:[{act:'Taller RV',esp:'SUM',dia:'2026-10-09',d:'14:00',h:'16:00',p:22}],hist:[ev('Alta','Equipo registrado','add_circle'),ev('Traslado','Aula 2 → SUM','swap_horiz')]},
+{id:3,cod:'AV-02',nom:'Proyector Epson',cat:'Audiovisual',tipo:'Trasladable',hab:'SUM',act:'SUM',est:'Disponible',nota:'',res:[],hist:[ev('Alta','Equipo registrado','add_circle')]},
+{id:4,cod:'AV-05',nom:'Sistema de sonido',cat:'Audiovisual',tipo:'Fijo',hab:'SUM',act:'SUM',est:'Mantenimiento',nota:'Hasta el 5/10',mt:{tipo:'Mantenimiento',hasta:'2026-10-05',obs:'Cambio de parlantes'},res:[],hist:[ev('Alta','Equipo registrado','add_circle'),ev('Mantenimiento','Cambio de parlantes · hasta 5/10','build')]},
+{id:5,cod:'CP-11',nom:'Notebooks (x10)',cat:'Cómputo',tipo:'Trasladable',hab:'Aula 2',act:'Aula 2',est:'Disponible',nota:'Carrito con 10 equipos',res:[],hist:[ev('Alta','Equipo registrado','add_circle')]},
+{id:6,cod:'MB-07',nom:'Mesas plegables',cat:'Mobiliario',tipo:'Trasladable',hab:'Mesa técnica',act:'Sala de reuniones',est:'Disponible',nota:'',res:[],hist:[ev('Alta','Equipo registrado','add_circle'),ev('Traslado','Mesa técnica → Sala de reuniones','swap_horiz')]},
+{id:7,cod:'CP-02',nom:'Impresora 3D',cat:'Robótica',tipo:'Fijo',hab:'Aula de Robótica',act:'Aula de Robótica',est:'Fuera de servicio',nota:'Sin repuestos',mt:{tipo:'Fuera de servicio',hasta:'',obs:'Extrusor roto'},res:[],hist:[ev('Alta','Equipo registrado','add_circle'),ev('Fuera de servicio','Extrusor roto','block')]}];
+const F={q:'',cat:'',est:'',tipo:''};let sel=1,tab='ficha';
+const $=s=>document.querySelector(s),g=id=>items.find(i=>i.id===id);
+const bc=e=>({Disponible:'g','En uso':'bu',Mantenimiento:'y','Fuera de servicio':'rd'}[e]);
+const bd=(c,t)=>`<span class="b ${c}">${t}</span>`;
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.x);toast.x=setTimeout(()=>e.style.display='none',2600)}
+function log(it,t,d,i){it.hist.unshift(ev(t,d,i));it.hist[0].f='8/10 '+new Date().toTimeString().slice(0,5)}
+function draw(){
+ $('#chips').innerHTML=['',...CATS].map(c=>`<button class="chip ${F.cat===c?'on':''}" onclick="F.cat='${c}';draw()">${c||'Todas'}</button>`).join(' ');
+ const L=items.filter(i=>(!F.q||(i.nom+i.cod).toLowerCase().includes(F.q.toLowerCase()))&&(!F.cat||i.cat===F.cat)&&(!F.est||i.est===F.est)&&(!F.tipo||i.tipo===F.tipo));
+ const c=e=>items.filter(i=>i.est===e).length;
+ $('#kpis').innerHTML=[['Total',items.length],['Disponibles',c('Disponible')],['En uso',c('En uso')],['Mantenimiento / fuera',c('Mantenimiento')+c('Fuera de servicio')]].map(k=>`<div class="kpi"><span class="sm">${k[0]}</span><b>${k[1]}</b></div>`).join('');
+ $('#sub').textContent=L.length+' equipos · Alta, ubicación, reservas y mantenimiento en un solo lugar';
+ $('#tb').innerHTML=L.map(i=>`<tr class="r ${i.id===sel?'sel':''}" onclick="sel=${i.id};tab='ficha';document.body.classList.add('sheet');draw()"><td data-l="Equipo"><div><b>${i.nom}</b><div class="sm">${i.cod}</div></div></td><td data-l="Categoría">${i.cat}</td><td data-l="Tipo">${bd(i.tipo==='Fijo'?'dk':'bu',i.tipo)}</td><td data-l="Espacio habitual">${i.hab}</td><td data-l="Ubicación actual">${i.act}${i.act!==i.hab?' '+bd('y','Fuera de su lugar'):''}</td><td data-l="Estado">${bd(bc(i.est),i.est)}</td></tr>`).join('')||'<tr><td colspan=6 class="sm">Sin resultados</td></tr>';
+ det()}
+function det(){const i=g(sel);if(!i){$('#det').innerHTML='<div class="sm">Elegí un equipo para ver el detalle.</div>';return}
+ const bad=i.est==='Mantenimiento'||i.est==='Fuera de servicio';
+ let body='';
+ if(tab==='ficha')body=`<dl class="kv"><dt>Categoría</dt><dd>${i.cat}</dd><dt>Tipo</dt><dd>${i.tipo}</dd><dt>Espacio habitual</dt><dd>${i.hab}</dd><dt>Ubicación actual</dt><dd>${i.act}</dd><dt>Estado</dt><dd>${bd(bc(i.est),i.est)}</dd><dt>Notas</dt><dd>${i.nota||'—'}</dd></dl>`+(i.mt?`<div class="al w"><span class="ms">warning</span><div>${i.mt.tipo}: ${i.mt.obs}${i.mt.hasta?' · hasta '+i.mt.hasta:''}</div></div>`:'')+(i.act!==i.hab?`<div class="al i"><span class="ms">info</span><div>Está fuera de su espacio habitual.</div></div>`:'');
+ if(tab==='res')body=i.res.length?i.res.map(r=>`<div class="li"><span class="ms">event</span><div><b>${r.act}</b><br>${r.esp} · ${r.dia} · ${r.d}–${r.h} · ${r.p} pers.<br><a href="#" onclick="cancelRes(${i.id},'${r.act}');return false" style="color:var(--er)">Cancelar reserva</a></div></div>`).join(''):'<div class="sm">Sin reservas.</div>';
+ if(tab==='hist')body=i.hist.map(h=>`<div class="li"><span class="ms">${h.i}</span><div><b>${h.t}</b> · <span class="sm">${h.f}</span><br>${h.d}</div></div>`).join('');
+ $('#det').innerHTML=`<button class="xbtn" aria-label="Cerrar" onclick="document.body.classList.remove('sheet')"><span class="ms">close</span></button><h3>${i.nom}</h3><div class="sm">${i.cod}</div><div class="tabs">${[['ficha','Ficha'],['res','Reservas ('+i.res.length+')'],['hist','Historial']].map(t=>`<button class="tab ${tab===t[0]?'on':''}" onclick="tab='${t[0]}';det()">${t[1]}</button>`).join('')}</div>${body}
+ <div class="acts"><button class="btn sec2 s" onclick="openForm(${i.id})"><span class="ms">edit</span>Editar</button><button class="btn pri s" ${bad?'disabled':''} onclick="openRes(${i.id})"><span class="ms">event</span>Reservar</button><button class="btn sec2 s" onclick="openMove(${i.id})"><span class="ms">swap_horiz</span>Cambiar ubicación</button>
+ ${bad?`<button class="btn pri s" onclick="restore(${i.id})"><span class="ms">check_circle</span>Volver a disponible</button>`:`<button class="btn des s" onclick="openMt(${i.id})"><span class="ms">build</span>Mantenimiento</button>`}</div>`}
+function modal(t,b,ok,fn){$('#mo').innerHTML=`<div class="ov" onclick="if(event.target===this)closeM()"><div class="mod"><h3>${t}</h3>${b}<div id="err"></div><div class="foot"><button class="btn gh" onclick="closeM()">Cancelar</button><button class="btn cta" onclick="${fn}">${ok}</button></div></div></div>`}
+const closeM=()=>$('#mo').innerHTML='';const v=id=>$('#'+id).value;
+const opt=(a,s)=>a.map(x=>`<option ${x===s?'selected':''}>${x}</option>`).join('');
+const err=m=>$('#err').innerHTML=`<div class="al e"><span class="ms">warning</span><div>${m}</div></div>`;
+function openForm(id){const i=id?g(id):{nom:'',cod:'',cat:CATS[0],tipo:'Trasladable',hab:ESP[0],nota:''};
+ modal(id?'Editar equipo':'Nuevo equipo',`<label>Nombre *</label><input id="fn" value="${i.nom}"><div class="row2"><div><label>Código</label><input id="fc" value="${i.cod}" placeholder="Ej: ROB-04"></div><div><label>Categoría</label><select id="fk">${opt(CATS,i.cat)}</select></div><div><label>Tipo</label><select id="ft">${opt(['Fijo','Trasladable'],i.tipo)}</select></div><div><label>Espacio habitual</label><select id="fh">${opt(ESP,i.hab)}</select></div></div><label>Notas</label><textarea id="fo" rows="2">${i.nota}</textarea>`,id?'Guardar':'Crear equipo',`saveForm(${id||0})`)}
+function saveForm(id){if(!v('fn').trim())return err('Falta el nombre del equipo.');
+ const d={nom:v('fn').trim(),cod:v('fc')||'NEW-'+(++n),cat:v('fk'),tipo:v('ft'),hab:v('fh'),nota:v('fo')};
+ if(id){const i=g(id);Object.assign(i,d);if(i.tipo==='Fijo')i.act=i.hab;log(i,'Edición','Datos actualizados','edit')}
+ else{const i={id:++n,...d,act:d.hab,est:'Disponible',res:[],hist:[]};log(i,'Alta','Equipo registrado','add_circle');items.push(i);sel=i.id}
+ closeM();toast(id?'Cambios guardados':'Equipo creado');draw()}
+function openRes(id){modal('Reservar para actividad',`<label>Actividad *</label><input id="ra" placeholder="Ej: Curso de Robótica – Clase 4"><div class="row2"><div><label>Espacio</label><select id="re">${opt(ESP,g(id).act)}</select></div><div><label>Fecha</label><input id="rf" type="date" value="2026-10-09"></div><div><label>Desde</label><input id="rd" type="time" value="14:00"></div><div><label>Hasta</label><input id="rh" type="time" value="16:00"></div></div><label>Cantidad de personas *</label><input id="rp" type="number" placeholder="Ej: 25">`,'Confirmar reserva',`saveRes(${id})`)}
+function saveRes(id){const i=g(id);if(!v('ra').trim()||!v('rp'))return err('No se puede reservar sin: actividad y cantidad de personas.');
+ if(v('rd')>=v('rh'))return err('La hora de fin debe ser posterior al inicio.');
+ const c=i.res.find(r=>r.dia===v('rf')&&r.d<v('rh')&&v('rd')<r.h);if(c)return err(`Se superpone con “${c.act}” (${c.d}–${c.h}).`);
+ i.res.push({act:v('ra'),esp:v('re'),dia:v('rf'),d:v('rd'),h:v('rh'),p:+v('rp')});log(i,'Reserva',`${v('ra')} · ${v('rf')} ${v('rd')}–${v('rh')}`,'event');closeM();tab='res';toast('Reserva confirmada');draw()}
+function cancelRes(id,a){const i=g(id);i.res=i.res.filter(r=>r.act!==a);log(i,'Reserva cancelada',a,'event_busy');toast('Reserva cancelada');draw()}
+function openMove(id){const i=g(id);if(i.tipo==='Fijo')return modal('Cambiar ubicación',`<div class="al w"><span class="ms">warning</span><div>“${i.nom}” es un equipo fijo y no se puede trasladar. Para cambiarlo, editá el tipo a Trasladable.</div></div>`,'Entendido','closeM()');
+ modal('Cambiar ubicación',`<div class="sm">Ubicación actual: ${i.act} · Habitual: ${i.hab}</div><label>Nueva ubicación</label><select id="mn">${opt(ESP,i.act)}</select><label>Motivo</label><input id="mm" placeholder="Ej: Taller de RV en SUM">`,'Confirmar traslado',`saveMove(${id})`)}
+function saveMove(id){const i=g(id),n2=v('mn');if(n2===i.act)return err('Elegí una ubicación distinta a la actual.');
+ log(i,'Traslado',`${i.act} → ${n2}${v('mm')?' · '+v('mm'):''}`,'swap_horiz');i.act=n2;closeM();toast('Ubicación actualizada');draw()}
+function openMt(id){modal('Mantenimiento o fuera de servicio',`<label>Tipo</label><select id="mt">${opt(['Mantenimiento','Fuera de servicio'])}</select><label>Hasta (opcional)</label><input id="mh" type="date"><label>Observación *</label><textarea id="mo2" rows="2"></textarea>`,'Registrar',`saveMt(${id})`)}
+function saveMt(id){const i=g(id);if(!v('mo2').trim())return err('Falta la observación.');
+ i.est=v('mt');i.mt={tipo:v('mt'),hasta:v('mh'),obs:v('mo2')};log(i,v('mt'),v('mo2')+(v('mh')?' · hasta '+v('mh'):''),i.est==='Mantenimiento'?'build':'block');closeM();toast('Estado actualizado');draw()}
+function restore(id){const i=g(id);i.est='Disponible';delete i.mt;log(i,'Disponible','Vuelve a estar operativo','check_circle');toast('Equipo disponible');draw()}
+document.addEventListener('click',e=>{if(e.target.closest('.top')===null&&document.body.classList.contains('menu')&&!e.target.closest('aside'))document.body.classList.remove('menu')});
+draw();
+</script></body></html>
