@@ -53,7 +53,7 @@ tr.r{cursor:pointer}tr.r:hover td{background:var(--ib)}tr.sel td{background:var(
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--az);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;display:none;z-index:9}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .kpi{background:var(--bl);border:1px solid var(--bo);border-radius:6px 6px 16px 16px;padding:12px 16px}.kpi b{font-size:30px;display:block}
-.top,.xbtn{display:none}
+.top,.xbtn{display:none}.nav{cursor:pointer}input[type=checkbox]{width:auto}.fc{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.bar input[type=number]{width:140px}
 @media(max-width:1000px){.top{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:3;background:var(--az);color:#fff;padding:10px 16px;margin:-16px -16px 16px;font-weight:800}
 .top button{background:none;border:0;color:#fff;cursor:pointer;padding:0}
 aside{display:block;position:fixed;inset:0 auto 0 0;z-index:7;transform:translateX(-100%);transition:transform .2s;overflow:auto}
@@ -72,14 +72,18 @@ tr.r:hover td,tr.sel td{background:none}tr.sel{border-color:var(--ac)}
 </style></head><body>
 <aside><h2>ESPACIOS CS</h2><div class="sec">OPERACIÓN</div>
 <div class="nav"><span class="ms">space_dashboard</span>Inicio</div><div class="nav"><span class="ms">inbox</span>Pedidos</div><div class="nav"><span class="ms">calendar_month</span>Calendario</div>
-<div class="sec">CONFIGURACIÓN</div><div class="nav"><span class="ms">meeting_room</span>Espacios</div><div class="nav on"><span class="ms">devices_other</span>Equipamiento</div></aside>
-<main><div class="top"><button aria-label="Menú" onclick="document.body.classList.toggle('menu')"><span class="ms">menu</span></button>ESPACIOS CS</div><header><div><h1>Equipamiento</h1><div class="sm" id="sub"></div></div><button class="btn cta" onclick="openForm()"><span class="ms">add</span>Nuevo equipo</button></header>
+<div class="sec">CONFIGURACIÓN</div><div class="nav" id="n-esp" onclick="setView('esp')"><span class="ms">meeting_room</span>Espacios</div><div class="nav on" id="n-eq" onclick="setView('eq')"><span class="ms">devices_other</span>Equipamiento</div></aside>
+<main><div class="top"><button aria-label="Menú" onclick="document.body.classList.toggle('menu')"><span class="ms">menu</span></button>ESPACIOS CS</div><div id="v-eq"><header><div><h1>Equipamiento</h1><div class="sm" id="sub"></div></div><button class="btn cta" onclick="openForm()"><span class="ms">add</span>Nuevo equipo</button></header>
 <div class="kpis" id="kpis"></div>
 <div class="bar"><input id="q" placeholder="Buscar por nombre o código" oninput="F.q=this.value;draw()"><div id="chips"></div>
 <select onchange="F.est=this.value;draw()"><option value="">Todos los estados</option><option>Disponible</option><option>En uso</option><option>Mantenimiento</option><option>Fuera de servicio</option></select>
 <select onchange="F.tipo=this.value;draw()"><option value="">Fijo y trasladable</option><option>Fijo</option><option>Trasladable</option></select></div>
 <div class="wrap"><div class="card"><table><thead><tr><th>EQUIPO</th><th>CATEGORÍA</th><th>TIPO</th><th>ESPACIO HABITUAL</th><th>UBICACIÓN ACTUAL</th><th>ESTADO</th></tr></thead><tbody id="tb"></tbody></table></div>
-<div class="card det" id="det"></div></div></main>
+<div class="card det" id="det"></div></div></div><div id="v-esp" style="display:none"><header><div><h1>Espacios</h1><div class="sm" id="subS"></div></div><button class="btn cta" onclick="openSp()"><span class="ms">add</span>Nuevo espacio</button></header>
+<div class="kpis" id="kpisS"></div>
+<div class="bar"><input id="qs" placeholder="Buscar espacio" oninput="SF.q=this.value;drawS()"><select onchange="SF.tipo=this.value;drawS()"><option value="">Todos los tipos</option><option>Aula</option><option>Laboratorio</option><option>Taller</option><option>SUM</option><option>Sala de reuniones</option><option>Otro</option></select><input type="number" min="0" placeholder="Capacidad mín." oninput="SF.cap=+this.value;drawS()"><select onchange="SF.disp=this.value;drawS()"><option value="">Toda disponibilidad</option><option>Disponible</option><option>No disponible</option></select></div>
+<div class="fc" id="chipsS"></div>
+<div class="wrap"><div class="card"><table><thead><tr><th>ESPACIO</th><th>TIPO</th><th>UBICACIÓN</th><th>CAPACIDAD</th><th>CARACTERÍSTICAS</th><th>EQUIPOS</th><th>ESTADO</th></tr></thead><tbody id="tbS"></tbody></table></div><div class="card det" id="det2"></div></div></div></main>
 <div id="toast"></div><div id="mo"></div>
 <script>
 const CATS=['Robótica','Realidad virtual','Audiovisual','Cómputo','Mobiliario'],ESP=['Aula de Robótica','Aula 2','SUM','Mesa técnica','Sala de reuniones'];
@@ -94,7 +98,7 @@ let items=[
 {id:7,cod:'CP-02',nom:'Impresora 3D',cat:'Robótica',tipo:'Fijo',hab:'Aula de Robótica',act:'Aula de Robótica',est:'Fuera de servicio',nota:'Sin repuestos',mt:{tipo:'Fuera de servicio',hasta:'',obs:'Extrusor roto'},res:[],hist:[ev('Alta','Equipo registrado','add_circle'),ev('Fuera de servicio','Extrusor roto','block')]}];
 const F={q:'',cat:'',est:'',tipo:''};let sel=1,tab='ficha';
 const $=s=>document.querySelector(s),g=id=>items.find(i=>i.id===id);
-const bc=e=>({Disponible:'g','En uso':'bu',Mantenimiento:'y','Fuera de servicio':'rd'}[e]);
+const bc=e=>({Indisponible:'rd',Disponible:'g','En uso':'bu',Mantenimiento:'y','Fuera de servicio':'rd'}[e]);
 const bd=(c,t)=>`<span class="b ${c}">${t}</span>`;
 function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.x);toast.x=setTimeout(()=>e.style.display='none',2600)}
 function log(it,t,d,i){it.hist.unshift(ev(t,d,i));it.hist[0].f='8/10 '+new Date().toTimeString().slice(0,5)}
@@ -141,5 +145,54 @@ function saveMt(id){const i=g(id);if(!v('mo2').trim())return err('Falta la obser
  i.est=v('mt');i.mt={tipo:v('mt'),hasta:v('mh'),obs:v('mo2')};log(i,v('mt'),v('mo2')+(v('mh')?' · hasta '+v('mh'):''),i.est==='Mantenimiento'?'build':'block');closeM();toast('Estado actualizado');draw()}
 function restore(id){const i=g(id);i.est='Disponible';delete i.mt;log(i,'Disponible','Vuelve a estar operativo','check_circle');toast('Equipo disponible');draw()}
 document.addEventListener('click',e=>{if(e.target.closest('.top')===null&&document.body.classList.contains('menu')&&!e.target.closest('aside'))document.body.classList.remove('menu')});
-draw();
+const TIPOS=['Aula','Laboratorio','Taller','SUM','Sala de reuniones','Otro'],CAR=['Proyector','Aire acondicionado','Accesible','Wi-Fi','Enchufes por puesto','Pizarra'];
+const E2=(t,d,i)=>({t,d,i,f:'30/9 09:40'});const al0=()=>[E2('Alta','Espacio registrado','add_circle')];
+let sp=[
+{id:1,nom:'Aula de Robótica',tipo:'Taller',ubi:'1° piso · Edificio A',cap:25,car:['Proyector','Wi-Fi','Enchufes por puesto'],dias:'Lun a Vie',h1:'08:00',h2:'20:00',est:'Disponible',res:[{act:'Curso de Robótica – Clase 4',dia:'2026-10-09',d:'14:00',h:'16:00',p:22}],hist:al0()},
+{id:2,nom:'Aula 2',tipo:'Aula',ubi:'1° piso · Edificio A',cap:30,car:['Pizarra','Proyector','Accesible'],dias:'Lun a Vie',h1:'08:00',h2:'18:00',est:'Disponible',res:[],hist:al0()},
+{id:3,nom:'SUM',tipo:'SUM',ubi:'Planta baja · Edificio B',cap:80,car:['Proyector','Accesible','Aire acondicionado','Wi-Fi'],dias:'Todos los días',h1:'08:00',h2:'22:00',est:'Disponible',res:[{act:'Jornada FTS',dia:'2026-10-12',d:'09:00',h:'13:00',p:60}],hist:al0()},
+{id:4,nom:'Mesa técnica',tipo:'Otro',ubi:'Planta baja · Edificio B',cap:10,car:['Enchufes por puesto','Wi-Fi'],dias:'Lun a Vie',h1:'09:00',h2:'17:00',est:'Disponible',res:[],hist:al0()},
+{id:5,nom:'Sala de reuniones',tipo:'Sala de reuniones',ubi:'2° piso · Edificio A',cap:12,car:['Proyector','Aire acondicionado','Wi-Fi'],dias:'Lun a Vie',h1:'09:00',h2:'18:00',est:'Mantenimiento',bloq:{tipo:'Mantenimiento',desde:'2026-10-05',hasta:'2026-10-16',obs:'Pintura y cambio de luces'},res:[],hist:[E2('Alta','Espacio registrado','add_circle'),E2('Mantenimiento','Pintura y cambio de luces · 5/10 al 16/10','build')]},
+{id:6,nom:'Laboratorio de Informática',tipo:'Laboratorio',ubi:'1° piso · Edificio B',cap:20,car:['Aire acondicionado','Enchufes por puesto','Wi-Fi','Pizarra'],dias:'Lun a Vie',h1:'08:00',h2:'20:00',est:'Disponible',res:[],hist:al0()}];
+const SF={q:'',tipo:'',cap:0,disp:'',car:[]};let ssel=1,stab='ficha',sn=200;
+const gs=id=>sp.find(s=>s.id===id),eqOf=s=>items.filter(i=>i.hab===s.nom);
+function syncEsp(){ESP.length=0;sp.forEach(s=>ESP.push(s.nom))}
+function agenda(s){return[...s.res.map(r=>({...r,x:''})),...items.flatMap(i=>i.res.filter(r=>r.esp===s.nom).map(r=>({...r,x:' · Equipo: '+i.nom})))].sort((a,b)=>(a.dia+a.d).localeCompare(b.dia+b.d))}
+function setView(x){document.body.classList.remove('menu','sheet');$('#v-eq').style.display=x==='eq'?'':'none';$('#v-esp').style.display=x==='esp'?'':'none';$('#n-eq').classList.toggle('on',x==='eq');$('#n-esp').classList.toggle('on',x==='esp');x==='esp'?drawS():draw()}
+function drawS(){
+ $('#chipsS').innerHTML='<span class="sm" style="align-self:center">Características:</span>'+CAR.map(c=>`<button class="chip ${SF.car.includes(c)?'on':''}" onclick="togC('${c}')">${c}</button>`).join('');
+ const L=sp.filter(s=>(!SF.q||s.nom.toLowerCase().includes(SF.q.toLowerCase()))&&(!SF.tipo||s.tipo===SF.tipo)&&s.cap>=SF.cap&&(!SF.disp||(SF.disp==='Disponible')===(s.est==='Disponible'))&&SF.car.every(c=>s.car.includes(c)));
+ const c=e=>sp.filter(s=>s.est===e).length;
+ $('#kpisS').innerHTML=[['Total',sp.length],['Disponibles',c('Disponible')],['En mantenimiento',c('Mantenimiento')],['Indisponibles',c('Indisponible')]].map(k=>`<div class="kpi"><span class="sm">${k[0]}</span><b>${k[1]}</b></div>`).join('');
+ $('#subS').textContent=L.length+' espacios · Capacidad, disponibilidad, bloqueos y agenda';
+ $('#tbS').innerHTML=L.map(s=>`<tr class="r ${s.id===ssel?'sel':''}" onclick="ssel=${s.id};stab='ficha';document.body.classList.add('sheet');drawS()"><td data-l="Espacio"><b>${s.nom}</b></td><td data-l="Tipo">${s.tipo}</td><td data-l="Ubicación">${s.ubi}</td><td data-l="Capacidad">${s.cap} pers.</td><td data-l="Características">${s.car.slice(0,2).map(x=>bd('gr',x)).join(' ')}${s.car.length>2?' '+bd('bu','+'+(s.car.length-2)):''}</td><td data-l="Equipos">${eqOf(s).length}</td><td data-l="Estado">${bd(bc(s.est),s.est)}</td></tr>`).join('')||'<tr><td colspan=7 class="sm">Sin resultados</td></tr>';
+ detS()}
+function togC(c){const k=SF.car.indexOf(c);k<0?SF.car.push(c):SF.car.splice(k,1);drawS()}
+function detS(){const s=gs(ssel);if(!s){$('#det2').innerHTML='<div class="sm">Elegí un espacio para ver el detalle.</div>';return}
+ const ag=agenda(s);let b='';
+ if(stab==='ficha')b=`<dl class="kv"><dt>Tipo</dt><dd>${s.tipo}</dd><dt>Ubicación</dt><dd>${s.ubi}</dd><dt>Capacidad</dt><dd>${s.cap} personas</dd><dt>Disponibilidad</dt><dd>${s.dias} · ${s.h1}–${s.h2}</dd><dt>Estado</dt><dd>${bd(bc(s.est),s.est)}</dd><dt>Características</dt><dd>${s.car.join(', ')||'—'}</dd></dl>`+(s.bloq?`<div class="al w"><span class="ms">warning</span><div>Bloqueado por ${s.bloq.tipo.toLowerCase()}: ${s.bloq.obs}<br>Desde ${s.bloq.desde}${s.bloq.hasta?' hasta '+s.bloq.hasta:' (sin fecha de fin)'}</div></div>`:'');
+ if(stab==='eq'){const aq=items.filter(i=>i.act===s.nom&&i.hab!==s.nom);b=(eqOf(s).map(i=>`<div class="li"><span class="ms">devices_other</span><div><b>${i.nom}</b> ${bd(i.tipo==='Fijo'?'dk':'bu',i.tipo)}<br>${i.act!==s.nom?bd('y','Hoy en '+i.act):'Está en este espacio'} ${bd(bc(i.est),i.est)}</div></div>`).join('')||'<div class="sm">Sin equipamiento asociado.</div>')+(aq.length?`<div class="sm" style="margin-top:12px">Equipos de otros espacios que están aquí hoy:</div>`+aq.map(i=>`<div class="li"><span class="ms">swap_horiz</span><div><b>${i.nom}</b><br>Habitual: ${i.hab}</div></div>`).join(''):'')+`<div class="acts"><button class="btn sec2 s" onclick="openAssoc(${s.id})"><span class="ms">link</span>Asociar equipo</button></div>`}
+ if(stab==='ag')b=ag.length?ag.map(r=>`<div class="li"><span class="ms">event</span><div><b>${r.act}</b>${r.x}<br>${r.dia} · ${r.d}–${r.h} · ${r.p} pers.</div></div>`).join(''):'<div class="sm">Sin reservas.</div>';
+ if(stab==='hist')b=s.hist.map(x=>`<div class="li"><span class="ms">${x.i}</span><div><b>${x.t}</b> · <span class="sm">${x.f}</span><br>${x.d}</div></div>`).join('');
+ $('#det2').innerHTML=`<button class="xbtn" aria-label="Cerrar" onclick="document.body.classList.remove('sheet')"><span class="ms">close</span></button><h3>${s.nom}</h3><div class="sm">${s.tipo} · ${s.cap} personas</div><div class="tabs">${[['ficha','Ficha'],['eq','Equipamiento ('+eqOf(s).length+')'],['ag','Agenda ('+ag.length+')'],['hist','Historial']].map(t=>`<button class="tab ${stab===t[0]?'on':''}" onclick="stab='${t[0]}';detS()">${t[1]}</button>`).join('')}</div>${b}
+ <div class="acts"><button class="btn sec2 s" onclick="openSp(${s.id})"><span class="ms">edit</span>Editar</button>${s.bloq?`<button class="btn pri s" onclick="unblock(${s.id})"><span class="ms">lock_open</span>Levantar bloqueo</button>`:`<button class="btn des s" onclick="openBlock(${s.id})"><span class="ms">lock</span>Bloquear temporalmente</button>`}</div>`}
+function openSp(id){const s=id?gs(id):{nom:'',tipo:'Aula',ubi:'',cap:'',car:[],dias:'Lun a Vie',h1:'08:00',h2:'18:00'};
+ modal(id?'Editar espacio':'Nuevo espacio',`<label>Nombre *</label><input id="sn" value="${s.nom}"><div class="row2"><div><label>Tipo</label><select id="st">${opt(TIPOS,s.tipo)}</select></div><div><label>Capacidad *</label><input id="sc" type="number" min="1" value="${s.cap}" placeholder="Ej: 30"></div></div><label>Ubicación *</label><input id="su" value="${s.ubi}" placeholder="Ej: 1° piso · Edificio A"><div class="row2"><div><label>Días</label><select id="sd">${opt(['Lun a Vie','Lun a Sáb','Todos los días'],s.dias)}</select></div><div class="row2"><div><label>Desde</label><input id="s1" type="time" value="${s.h1}"></div><div><label>Hasta</label><input id="s2" type="time" value="${s.h2}"></div></div></div><label>Características</label><div>${CAR.map(c=>`<label style="display:inline-flex;gap:6px;align-items:center;font-weight:400;margin:4px 12px 0 0"><input type="checkbox" class="ck" value="${c}" ${s.car.includes(c)?'checked':''}>${c}</label>`).join('')}</div>`,id?'Guardar':'Crear espacio',`saveSp(${id||0})`)}
+function saveSp(id){const nom=v('sn').trim();if(!nom||!v('sc')||!v('su').trim())return err('Faltan datos: nombre, capacidad y ubicación.');
+ if(+v('sc')<1)return err('La capacidad debe ser mayor a 0.');if(v('s1')>=v('s2'))return err('El horario de fin debe ser posterior al inicio.');
+ if(sp.some(x=>x.nom.toLowerCase()===nom.toLowerCase()&&x.id!==id))return err('Ya existe un espacio con ese nombre.');
+ const d={nom,tipo:v('st'),ubi:v('su').trim(),cap:+v('sc'),dias:v('sd'),h1:v('s1'),h2:v('s2'),car:[...document.querySelectorAll('.ck:checked')].map(x=>x.value)};
+ if(id){const s=gs(id),o=s.nom;Object.assign(s,d);if(o!==nom)items.forEach(i=>{if(i.hab===o)i.hab=nom;if(i.act===o)i.act=nom;i.res.forEach(r=>{if(r.esp===o)r.esp=nom})});log(s,'Edición','Datos actualizados','edit')}
+ else{const s={id:++sn,...d,est:'Disponible',res:[],hist:[]};log(s,'Alta','Espacio registrado','add_circle');sp.push(s);ssel=s.id}
+ syncEsp();closeM();toast(id?'Cambios guardados':'Espacio creado');drawS()}
+function openBlock(id){modal('Bloqueo temporal',`<label>Motivo</label><select id="bt">${opt(['Mantenimiento','Indisponible'])}</select><div class="row2"><div><label>Desde *</label><input id="bd" type="date" value="2026-10-08"></div><div><label>Hasta (opcional)</label><input id="bh" type="date"></div></div><label>Observación *</label><textarea id="bo" rows="2"></textarea>`,'Bloquear',`saveBlock(${id})`)}
+function saveBlock(id){const s=gs(id);if(!v('bd')||!v('bo').trim())return err('Faltan datos: fecha de inicio y observación.');if(v('bh')&&v('bh')<v('bd'))return err('La fecha de fin no puede ser anterior al inicio.');
+ const n2=agenda(s).filter(r=>r.dia>=v('bd')&&(!v('bh')||r.dia<=v('bh'))).length;
+ s.est=v('bt');s.bloq={tipo:v('bt'),desde:v('bd'),hasta:v('bh'),obs:v('bo')};log(s,v('bt'),v('bo')+' · desde '+v('bd')+(v('bh')?' hasta '+v('bh'):''),s.est==='Mantenimiento'?'build':'block');closeM();stab='ficha';toast(n2?`Espacio bloqueado · ${n2} reserva(s) afectada(s)`:'Espacio bloqueado');drawS()}
+function unblock(id){const s=gs(id);s.est='Disponible';delete s.bloq;log(s,'Disponible','Se levantó el bloqueo','lock_open');toast('Espacio disponible');drawS()}
+function openAssoc(id){const s=gs(id),L=items.filter(i=>i.hab!==s.nom);if(!L.length)return modal('Asociar equipo','<div class="al i"><span class="ms">info</span><div>Todos los equipos ya están asociados a este espacio.</div></div>','Entendido','closeM()');
+ modal('Asociar equipo',`<div class="sm">El equipo pasará a tener a ${s.nom} como espacio habitual.</div><label>Equipo</label><select id="ae">${L.map(i=>`<option value="${i.id}">${i.nom} (hoy habitual: ${i.hab})</option>`).join('')}</select>`,'Asociar',`saveAssoc(${id})`)}
+function saveAssoc(id){const s=gs(id),i=g(+v('ae'));const o=i.hab;i.hab=s.nom;if(i.tipo==='Fijo')i.act=s.nom;log(i,'Asociación',`Espacio habitual: ${o} → ${s.nom}`,'link');log(s,'Equipo asociado',i.nom,'link');closeM();stab='eq';toast('Equipo asociado');draw();drawS()}
+
+syncEsp();draw();drawS();
 </script></body></html>
